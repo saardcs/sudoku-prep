@@ -53,9 +53,23 @@
   </style>
 </head>
 <body>
+  <button onclick="clearUserInput()">Clear User Input</button>
   <table id="sudoku"></table>
 
   <script>
+    function clearUserInput() {
+  for (let i = 0; i < 6; i++) {
+    for (let j = 0; j < 6; j++) {
+      const inputEl = document.getElementById(`cell-${i}-${j}`);
+      if (!inputEl.readOnly) {
+        inputEl.value = '';
+        inputEl.style.backgroundColor = '';
+        inputEl.style.color = '#000';
+      }
+    }
+  }
+}
+
     const puzzle = [
       [0, 0, 4, 0, 6, 0],
       [0, 0, 0, 5, 1, 0],
