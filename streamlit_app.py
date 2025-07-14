@@ -49,6 +49,7 @@ elif st.session_state.puzzle_index == 1:
 else:
     st.balloons()
     st.success("🎉 All puzzles completed!")
+    st.write("https://block-towers.streamlit.app/")
     st.stop()
 
 # Show Sudoku
