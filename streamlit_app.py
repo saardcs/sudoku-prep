@@ -1,8 +1,21 @@
 import streamlit as st
+import qrcode
+import io
 import streamlit.components.v1 as components
 
 st.set_page_config(page_title="Sudoku Prep", layout="centered")
 st.title("Sudoku Prep")
+
+# Sidebar with QR code
+st.sidebar.header("Scan This QR Code to View Menu Online")
+
+qr_link = "https://code-vault.streamlit.app"  # Replace with your actual URL
+qr = qrcode.make(qr_link)
+buf = io.BytesIO()
+qr.save(buf)
+buf.seek(0)
+
+st.sidebar.image(buf, width=300, caption=qr_link)
 
 # Session state to track which puzzle we’re on
 if "puzzle_index" not in st.session_state:
