@@ -49,6 +49,44 @@ elif st.session_state.puzzle_index == 1:
 else:
     st.balloons()
     st.success("🎉 All puzzles completed!")
+    
+    nickname = st.text_input("Enter your nickname:")
+    roll_number = st.text_input("Enter your roll number:")
+    
+    if st.button("Submit Score"):
+        if nickname.strip() and roll_number.strip():
+            import gspread
+            from google.oauth2.service_account import Credentials
+
+            # Set up creds and open your sheet
+            scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+        
+            # Load credentials from Streamlit secrets
+            service_account_info = st.secrets["gcp_service_account"]
+            creds = Credentials.from_service_account_info(service_account_info, scopes=scopes)
+        
+            client = gspread.authorize(creds)
+            import datetime
+        
+            # Timestamp for filenames and sheets
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+            try:
+                sheet = client.open("Review").worksheet("Sudoku")
+            except gspread.WorksheetNotFound:
+                st.error("Worksheet not found. Please check your Google Sheet.")
+
+            row = [roll_number.strip(), nickname.strip(), timestamp]
+            sheet.append_row(row)
+            st.success("✅ Score submitted!")
+            # if st.button("🔁 Start Over"):
+            #     st.session_state.index = 0
+            #     st.session_state.score = 0
+            #     st.session_state.correct_factors = False
+            #     st.session_state.correct_gcd = None
+            #     st.rerun()
+        else:
+            st.warning("Please enter your nickname and roll number.")
     st.stop()
 
 # Show Sudoku
