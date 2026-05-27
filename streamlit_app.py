@@ -72,7 +72,7 @@ else:
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
             try:
-                sheet = client.open("Review").worksheet("Sudoku")
+                sheet = client.open("GCF").worksheet("Sudoku")
             except gspread.WorksheetNotFound:
                 st.error("Worksheet not found. Please check your Google Sheet.")
 
